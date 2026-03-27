@@ -25,14 +25,9 @@ module {
     value : Text;
   };
 
-  // 100 KB for HTML pages (enough for SEO signals, avoids consensus failures)
-  let htmlMaxBytes : Nat64 = 102_400;
-  // 50 KB for API JSON responses (PSI, YouTube, etc.)
-  let apiMaxBytes : Nat64 = 51_200;
-
   let httpRequestCycles = 231_000_000_000;
 
-  // Default request — used for API JSON responses (PSI, etc.)
+  // General HTTP GET – capped at 50 KB, safe for API JSON responses
   public func httpGetRequest(url : Text, extraHeaders : [Header], transform : Transform) : async Text {
     let headers = extraHeaders.concat([{
       name = "User-Agent";
@@ -40,7 +35,7 @@ module {
     }]);
     let http_request : IC.http_request_args = {
       url;
-      max_response_bytes = ?apiMaxBytes;
+      max_response_bytes = ?51_200;
       headers;
       body = null;
       method = #get;
@@ -57,15 +52,15 @@ module {
     };
   };
 
-  // Use this for fetching HTML pages — larger limit to capture meaningful content
+  // Fetch HTML pages for SEO analysis – capped at 100 KB
   public func httpGetHtml(url : Text, transform : Transform) : async Text {
-    let headers : [Header] = [{
-      name = "User-Agent";
-      value = "Mozilla/5.0 (compatible; CaffeineBot/1.0)";
-    }];
+    let headers : [Header] = [
+      { name = "User-Agent"; value = "Mozilla/5.0 (compatible; CaffeineBot/1.0)" },
+      { name = "Accept"; value = "text/html,application/xhtml+xml,*/*;q=0.8" },
+    ];
     let http_request : IC.http_request_args = {
       url;
-      max_response_bytes = ?htmlMaxBytes;
+      max_response_bytes = ?102_400;
       headers;
       body = null;
       method = #get;
@@ -90,7 +85,7 @@ module {
     let requestBody = body.encodeUtf8();
     let httpRequest : IC.http_request_args = {
       url;
-      max_response_bytes = ?apiMaxBytes;
+      max_response_bytes = ?51_200;
       headers;
       body = ?requestBody;
       method = #post;

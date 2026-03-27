@@ -12,7 +12,6 @@ export function useSiteHealthScore() {
     queryKey: ["siteHealthScore"],
     queryFn: async () => {
       if (!actor) return 0;
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       const score = await (actor as any).getSiteHealthScore();
       return Number(score);
     },
@@ -26,7 +25,6 @@ export function useAllUrlAuditResults() {
     queryKey: ["allUrlAuditResults"],
     queryFn: async () => {
       if (!actor) return [];
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).getAllUrlAuditResults();
     },
     enabled: !!actor && !isFetching,
@@ -39,7 +37,6 @@ export function useSchedules() {
     queryKey: ["schedules"],
     queryFn: async () => {
       if (!actor) return [];
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).getSchedules();
     },
     enabled: !!actor && !isFetching,
@@ -52,7 +49,6 @@ export function useProjectHistory() {
     queryKey: ["projectHistory"],
     queryFn: async () => {
       if (!actor) return [];
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).getProjectHistory();
     },
     enabled: !!actor && !isFetching,
@@ -65,7 +61,6 @@ export function useSaveSchedule() {
   return useMutation({
     mutationFn: async (schedule: CrawlSchedule) => {
       if (!actor) throw new Error("Actor not ready");
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).saveSchedule(schedule);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["schedules"] }),
@@ -78,7 +73,6 @@ export function useDeleteSchedule() {
   return useMutation({
     mutationFn: async (id: string) => {
       if (!actor) throw new Error("Actor not ready");
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).deleteSchedule(id);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["schedules"] }),
@@ -91,7 +85,6 @@ export function useToggleSchedule() {
   return useMutation({
     mutationFn: async (id: string) => {
       if (!actor) throw new Error("Actor not ready");
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).toggleSchedule(id);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["schedules"] }),
@@ -104,7 +97,6 @@ export function useSaveProjectHistory() {
   return useMutation({
     mutationFn: async (entry: ProjectHistoryEntry) => {
       if (!actor) throw new Error("Actor not ready");
-      // biome-ignore lint/suspicious/noExplicitAny: backend.ts is generated and typed separately
       return (actor as any).saveProjectHistory(entry);
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["projectHistory"] }),

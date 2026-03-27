@@ -385,7 +385,11 @@ function CrawlerTab({ results, onResultsChange }: CrawlerTabProps) {
   }, []);
 
   const runSingle = async () => {
-    if (!actor || !singleUrl.trim()) return;
+    if (!actor) {
+      toast.error("Backend not ready. Please wait a moment and try again.");
+      return;
+    }
+    if (!singleUrl.trim()) return;
     const trimmed = singleUrl.trim();
     if (!/^https?:\/\/.+/.test(trimmed)) {
       setUrlError("URL must start with http:// or https://");
@@ -409,15 +413,21 @@ function CrawlerTab({ results, onResultsChange }: CrawlerTabProps) {
       });
       toast.success("Audit complete!");
     } catch (err) {
-      console.error("[SEOAudit][runUrlAudit] Error:", err);
-      toast.error("Audit failed. Check the URL and try again.");
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error("[SEOAudit][runUrlAudit] Error:", msg);
+      toast.error(
+        `Audit failed: ${msg.length > 80 ? `${msg.slice(0, 80)}...` : msg}`,
+      );
     } finally {
       setRunning(false);
     }
   };
 
   const runBulk = async () => {
-    if (!actor) return;
+    if (!actor) {
+      toast.error("Backend not ready. Please wait a moment and try again.");
+      return;
+    }
     const urls = bulkText
       .split("\n")
       .map((u) => u.trim())
