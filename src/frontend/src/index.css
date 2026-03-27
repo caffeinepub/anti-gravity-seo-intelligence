@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.375rem;
+    /* Dark Enterprise Theme */
+    --background: 0.13 0.015 260;
+    --foreground: 0.95 0.005 260;
+    --card: 0.17 0.012 260;
+    --card-foreground: 0.95 0.005 260;
+    --popover: 0.19 0.014 260;
+    --popover-foreground: 0.95 0.005 260;
+    --primary: 0.6 0.2 250;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.22 0.012 260;
+    --secondary-foreground: 0.85 0.008 260;
+    --muted: 0.25 0.01 260;
+    --muted-foreground: 0.6 0.01 260;
+    --accent: 0.23 0.015 260;
+    --accent-foreground: 0.95 0.005 260;
+    --destructive: 0.6 0.22 27;
+    --destructive-foreground: 0.98 0 0;
+    --border: 0.22 0.01 260;
+    --input: 0.22 0.012 260;
+    --ring: 0.6 0.2 250;
+    /* Custom semantic tokens */
+    --warning: 0.75 0.17 80;
+    --warning-foreground: 0.15 0.01 80;
+    --success: 0.7 0.17 145;
+    --success-foreground: 0.12 0.01 145;
+    --info: 0.6 0.2 250;
+    --info-foreground: 0.98 0 0;
+    /* Chart colors */
+    --chart-1: 0.6 0.2 250;
+    --chart-2: 0.7 0.17 145;
+    --chart-3: 0.6 0.22 27;
+    --chart-4: 0.75 0.17 80;
+    --chart-5: 0.65 0.18 300;
+    /* Sidebar */
+    --sidebar: 0.11 0.013 260;
+    --sidebar-foreground: 0.95 0.005 260;
+    --sidebar-primary: 0.6 0.2 250;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.16 0.012 260;
+    --sidebar-accent-foreground: 0.95 0.005 260;
+    --sidebar-border: 0.22 0.01 260;
+    --sidebar-ring: 0.6 0.2 250;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--muted));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--primary));
+  }
+
+  .font-mono {
+    font-family: "JetBrains Mono", monospace;
+  }
+}
+
+/* Severity color utilities */
+.text-warning {
+  color: oklch(var(--warning));
+}
+.bg-warning {
+  background-color: oklch(var(--warning));
+}
+.border-warning {
+  border-color: oklch(var(--warning));
+}
+.text-success {
+  color: oklch(var(--success));
+}
+.bg-success {
+  background-color: oklch(var(--success));
+}
+.border-success {
+  border-color: oklch(var(--success));
+}
+
+/* Severity badge variants */
+.badge-error {
+  background-color: oklch(var(--destructive) / 0.15);
+  color: oklch(var(--destructive));
+  border: 1px solid oklch(var(--destructive) / 0.3);
+}
+.badge-warning {
+  background-color: oklch(var(--warning) / 0.15);
+  color: oklch(var(--warning));
+  border: 1px solid oklch(var(--warning) / 0.3);
+}
+.badge-info {
+  background-color: oklch(var(--primary) / 0.15);
+  color: oklch(var(--primary));
+  border: 1px solid oklch(var(--primary) / 0.3);
+}
+.badge-success {
+  background-color: oklch(var(--success) / 0.15);
+  color: oklch(var(--success));
+  border: 1px solid oklch(var(--success) / 0.3);
+}
+
+/* Data table row hover */
+.data-row:hover {
+  background-color: oklch(var(--muted) / 0.4);
+  cursor: pointer;
+}
+
+/* Sidebar active accent */
+.nav-active {
+  background-color: oklch(var(--primary) / 0.1);
+  color: oklch(var(--primary));
+  border-left: 2px solid oklch(var(--primary));
+}
+.nav-inactive {
+  color: oklch(var(--muted-foreground));
+  border-left: 2px solid transparent;
+}
+.nav-inactive:hover {
+  background-color: oklch(var(--muted) / 0.3);
+  color: oklch(var(--foreground));
+}
