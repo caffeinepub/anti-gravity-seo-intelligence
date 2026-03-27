@@ -825,7 +825,7 @@ actor {
 
   public func runUrlAudit(url : Text) : async UrlAuditResult {
     // Fetch HTML for on-page analysis
-    let html = await Outcall.httpGetRequest(url, [], transform);
+    let html = await Outcall.httpGetHtml(url, transform);
 
     // Fetch PSI scores
     let fields = "lighthouseResult(categories,audits(largest-contentful-paint,cumulative-layout-shift,first-contentful-paint,speed-index))";
